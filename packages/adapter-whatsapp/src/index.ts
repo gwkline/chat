@@ -654,6 +654,18 @@ export class WhatsAppAdapter
       type,
       mimeType,
       name,
+      fetchMetadata: { mediaId },
+      fetchData: () => this.downloadMedia(mediaId),
+    };
+  }
+
+  rehydrateAttachment(attachment: Attachment): Attachment {
+    const mediaId = attachment.fetchMetadata?.mediaId;
+    if (!mediaId) {
+      return attachment;
+    }
+    return {
+      ...attachment,
       fetchData: () => this.downloadMedia(mediaId),
     };
   }
